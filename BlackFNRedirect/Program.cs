@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,11 +18,32 @@ public static class Program
 
         try
         {
+            int port = 8432;
+            string targetHost = "ols.blackfn.ghost143.de";
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == "--use-port" && i + 1 < args.Length)
+                {
+                    if (!int.TryParse(args[i + 1], out port))
+                    {
+                        Console.Error.WriteLine($"Invalid port: {args[i + 1]}");
+                        return 1;
+                    }
+                    i++;
+                }
+                else if (args[i] == "--use-target" && i + 1 < args.Length)
+                {
+                    targetHost = args[i + 1].Replace("https://", "").Replace("http://", "");
+                    i++;
+                }
+            }
+
             var config = new ProxyConfiguration
             {
                 ListenAddress = IPAddress.Any,
-                Port = 8432,
-                TargetHost = "ols.blackfn.ghost143.de",
+                Port = port,
+                TargetHost = targetHost,
                 SourcePattern = ".ol.epicgames.com",
                 EnableVerboseLogging = false
             };
@@ -30,6 +52,7 @@ public static class Program
             await _proxyService.StartAsync(_cts.Token);
 
             Console.WriteLine($"Proxy listening on {config.ListenAddress}:{config.Port}");
+            Console.WriteLine($"Redirecting to {config.TargetHost}");
             
             await Task.Delay(Timeout.Infinite, _cts.Token);
         }

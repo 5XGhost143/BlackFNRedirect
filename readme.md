@@ -12,3 +12,14 @@
 **=> and an Server that is decent for this Proxy**
 
 
+**Setup:**
+
+**Go into Terminal and run BlackFNRedirect here is an example how to execute the Proxy: BlackFNRedirect.exe --use-port 4221 --use-target https://ols.blackfn.ghost143.de**
+
+**Arguments meanings:**
+
+**=> --use-port basically sets the Port where the Proxy should run but this isn't required to set.**
+
+**=> --use-target this one is the very important argument because this says to Proxy on which Backend it should redirect this is also not required to set if u don't set this one it will automatically redirect to the BlackFN Backend**
+
+
