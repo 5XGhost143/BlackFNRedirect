@@ -23,3 +23,6 @@
 **=> --use-target this one is the very important argument because this says to Proxy on which Backend it should redirect this is also not required to set if u don't set this one it will automatically redirect to the BlackFN Backend**
 
 
+**Note: I only tested it on Windows so idk if it works on Linux, but I still made an Linux Build in the Actions**
+
+
