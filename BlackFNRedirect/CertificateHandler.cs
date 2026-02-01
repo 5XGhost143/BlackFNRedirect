@@ -27,6 +27,7 @@ internal sealed class CertificateHandler
 
     public void TrustRootCertificate()
     {
+        // root cert is important without this ur basically cooked
         _proxyServer.CertificateManager.EnsureRootCertificate();
         
         if (_proxyServer.CertificateManager.RootCertificate != null &&

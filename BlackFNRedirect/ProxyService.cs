@@ -30,7 +30,6 @@ public sealed class ProxyService : IDisposable
         _proxyServer.BeforeRequest += _requestHandler.OnRequestAsync;
         _proxyServer.BeforeResponse += _requestHandler.OnResponseAsync;
         _proxyServer.ServerCertificateValidationCallback += _certificateHandler.OnCertificateValidationAsync;
-        _proxyServer.ExceptionFunc += OnProxyException;
 
         var endpoint = new ExplicitProxyEndPoint(_config.ListenAddress, _config.Port, true);
         endpoint.BeforeTunnelConnectRequest += _requestHandler.OnBeforeTunnelConnectAsync;
@@ -50,11 +49,6 @@ public sealed class ProxyService : IDisposable
             _proxyServer.Stop();
         }
         await Task.CompletedTask;
-    }
-
-    private void OnProxyException(Exception ex)
-    {
-        Console.Error.WriteLine($"Proxy error: {ex.Message}");
     }
 
     public void Dispose()

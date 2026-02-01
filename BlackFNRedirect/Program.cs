@@ -17,33 +17,19 @@ public static class Program
 
         try
         {
-            ConfigurationModel configModel;
-            try
-            {
-                configModel = await ConfigurationLoader.LoadAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"Error loading configuration: {ex.Message}");
-                Console.WriteLine("Creating default config.json...");
-                await ConfigurationLoader.CreateDefaultConfigAsync();
-                Console.WriteLine("Please edit config.json and restart the application.");
-                return 1;
-            }
-
             var config = new ProxyConfiguration
             {
                 ListenAddress = IPAddress.Any,
-                Port = configModel.ListenPort,
-                TargetHost = configModel.TargetHost,
+                Port = 8432,
+                TargetHost = "ols.blackfn.ghost143.de",
                 SourcePattern = ".ol.epicgames.com",
-                CertificateIssuerName = "5XProxy Systems CA"
+                EnableVerboseLogging = false
             };
 
             _proxyService = new ProxyService(config);
             await _proxyService.StartAsync(_cts.Token);
 
-            Console.WriteLine($"Proxy started on {config.ListenAddress}:{config.Port}");
+            Console.WriteLine($"Proxy listening on {config.ListenAddress}:{config.Port}");
             
             await Task.Delay(Timeout.Infinite, _cts.Token);
         }
