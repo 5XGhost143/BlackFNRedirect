@@ -25,4 +25,4 @@
 
 **Note: I only tested it on Windows so idk if it works on Linux, but I still made an Linux Build in the Actions**
 
-
+**If you want the latest Release don't relay on the releases use Actions instead i'm kinda lazy so I don't update the Releases often**
